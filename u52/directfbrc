@@ -1,14 +1,10 @@
-system=fbdev
+ystem=fbdev
 madv-remove
 no-cursor-automation
 smooth-upscale
 smooth-downscale
-fbdev=/dev/fb0
-mode=1280x720
-depth=32
-pixelformat=ARGB
 bg-color=0
-res=720p
+pixelformat=ARGB
 linux-input-force
 layers-clear
 quiet
