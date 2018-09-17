@@ -1,6 +1,8 @@
 from Screens.Screen import Screen
+from Screens.ChannelSelection import ChannelSelection
 from Components.ActionMap import ActionMap
-from enigma import eTimer
+from enigma import eTimer, eServiceReference
+from boxbranding import getMachineBuild
 
 import os, struct, vbcfg
 
@@ -33,7 +35,10 @@ class HbbTVWindow(Screen):
 
 		self._url = url
 		self._info = app_info
-		
+
+		if getMachineBuild() in ('dags7252'):
+			self.servicelist = self.session.instantiateDialog(ChannelSelection)
+
 		self.onLayoutFinish.append(self.start_hbbtv_application)
 
 		self._close_timer = eTimer()
@@ -110,10 +115,16 @@ class HbbTVWindow(Screen):
 		vbcfg.osd_unlock()
 		dsk.paint()
 
-		vbcfg.set_bgcolor("0")
+		if getMachineBuild() not in ('dags7252'):
+			vbcfg.set_bgcolor("0")
 		vbcfg.DEBUG("Stop HbbTV")
-		
+
 		os.system("run.sh stop")
-		
+
+		if getMachineBuild() in ('dags7252'):
+			cur_channel = self.servicelist.getCurrentSelection()
+			cur_channel = cur_channel.toString()
+			self.session.nav.playService(eServiceReference(cur_channel))
+
 		self.close()
 

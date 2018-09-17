@@ -10,6 +10,7 @@ from Components.Language import language
 from Components.ServiceEventTracker import ServiceEventTracker
 from Components.VolumeControl import VolumeControl
 from Tools.Directories import fileExists
+from boxbranding import getMachineBuild
 
 from enigma import eTimer, iServiceInformation, iPlayableService
 
@@ -97,11 +98,15 @@ class VBHandler(VBHandlers):
 					if x in self.onCloseCB:
 						self.onCloseCB.remove(x)
 		#print "============== self.videobackend_activate: ", self.videobackend_activate, "   =============="
-		#if self.videobackend_activate is False:
-		if self.videobackend_activate is True:
-			#self._session.nav.stopService()
-			if vbcfg.g_service is not None:
-				self._session.nav.playService(vbcfg.g_service)
+		if getMachineBuild() in ('dags7252'):
+			if self.videobackend_activate is False:
+				self._session.nav.stopService()
+				if vbcfg.g_service is not None:
+					self._session.nav.playService(vbcfg.g_service)
+		else:
+			if self.videobackend_activate is True:
+				if vbcfg.g_service is not None:
+					self._session.nav.playService(vbcfg.g_service)
 		return (True, None)
 
 	def _CB_CONTROL_TITLE(self, result, packet):
