@@ -28,6 +28,7 @@ class HbbTVWindow(Screen):
 		elif (self.height < 576):
 			self.height = 576
 		
+		vbcfg.g_vmpegposition = vbcfg.getvmpegPosition()
 		vbcfg.g_position = vbcfg.getPosition()
 		vbcfg.osd_lock()
 
@@ -111,6 +112,7 @@ class HbbTVWindow(Screen):
 		gMainDC.getInstance().setResolution(desktop_size.width(), desktop_size.height())
 
 		#print "========= stop_hbbtv_application:: g_position: ", vbcfg.g_position, "  ==================="
+		vbcfg.setvmpegPosition(vbcfg.g_vmpegposition)
 		vbcfg.setPosition(vbcfg.g_position)
 		vbcfg.osd_unlock()
 		dsk.paint()

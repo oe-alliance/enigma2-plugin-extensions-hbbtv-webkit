@@ -8,6 +8,7 @@ g_main = None
 g_service = None
 g_channel_info = None
 g_position = None
+g_vmpegposition = None
 
 need_restart = False
 
@@ -46,6 +47,30 @@ def getPosition():
 			return None
 	return (dst_left, dst_width, dst_top, dst_height)
 
+def getvmpegPosition():
+	dst_left = 0
+	dst_width = 720
+	dst_top = 0
+	dst_height = 576
+	if fileExists("/proc/stb/vmpeg/0/dst_left"):
+		try:
+			file = open("/proc/stb/vmpeg/0/dst_left", "r")
+			dst_left = int(file.read().strip(), 16)
+			file.close()
+			file = open("/proc/stb/vmpeg/0/dst_width", "r")
+			dst_width = int(file.read().strip(), 16)
+			file.close()
+			file = open("/proc/stb/vmpeg/0/dst_top", "r")
+			dst_top = int(file.read().strip(), 16)
+			file.close()
+			file = open("/proc/stb/vmpeg/0/dst_height", "r")
+			dst_height = int(file.read().strip(), 16)
+			file.close()
+		except Exception, Err:
+			ERR(Err)
+			return None
+	return (dst_left, dst_width, dst_top, dst_height)
+
 def setPosition(params):
 	if params is None:
 		return
@@ -66,6 +91,17 @@ def setPosition(params):
 			file = open("/proc/stb/fb/dst_height", "w")
 			file.write('%X' % params[3])
 			file.close()
+		except Exception, Err:
+			ERR(Err)
+			return
+
+def setvmpegPosition(params):
+	if params is None:
+		return
+	if params[0] + params[1] > 720 or params[2] + params[3] > 576 :
+		return
+	else:
+		try:
 			# Video
 			file = open("/proc/stb/vmpeg/0/dst_left", "w")
 			file.write('%X' % params[0])
