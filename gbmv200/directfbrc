@@ -1,0 +1,15 @@
+system=fbdev
+madv-remove
+no-cursor-automation
+smooth-upscale
+smooth-downscale
+bg-color=0
+pixelformat=ARGB
+layers-clear
+quiet
+no-cursor
+vt
+no-vt-switch
+no-debug
+linux-input-devices=/dev/input/event0
+no-banner
