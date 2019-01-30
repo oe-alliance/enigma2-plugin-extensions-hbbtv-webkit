@@ -14,3 +14,4 @@ no-vt-switch
 no-debug
 linux-input-devices=/dev/input/event0
 no-banner
+desktop-buffer-mode=backvideo
