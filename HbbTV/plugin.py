@@ -347,7 +347,7 @@ class VBMain(Screen):
 				reader = eAITSectionReader(demux, pmtid, sid)
 				if reader.doOpen(info, self.aitReader):
 					reader.doParseApplications()
-					reader.doDump()
+					#reader.doDump()
 				else:
 					vbcfg.ERR("no AIT")
 
