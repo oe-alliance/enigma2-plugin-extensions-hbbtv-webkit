@@ -1,5 +1,6 @@
+from __future__ import absolute_import
 import os, threading, time, socket, select, struct
-import vbcfg
+from . import vbcfg
 
 _OPCODE  = {}
 _BUFSIZE = 4096

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 from Plugins.Plugin import PluginDescriptor
 from Screens.Screen import Screen
 from Screens.InfoBar import InfoBar
@@ -14,10 +15,11 @@ from boxbranding import getMachineBuild
 
 from enigma import eTimer, iServiceInformation, iPlayableService
 
-import os, struct, vbcfg, time
+import os, struct, time
+from . import vbcfg
 
-from hbbtv import HbbTVWindow
-from vbipc import VBController, VBServerThread, VBHandlers
+from .hbbtv import HbbTVWindow
+from .vbipc import VBController, VBServerThread, VBHandlers
 
 strIsEmpty = lambda x: x is None or len(x) == 0
 
@@ -146,7 +148,7 @@ class VBHandler(VBHandlers):
 		if self.soft_volume > 0 and self.max_volume > 0:
 			v = int((self.max_volume * self.soft_volume) / 100)
 			VolumeControl.instance.volctrl.setVolume(v, v)
-		elif self.max_volume is not 0:
+		elif self.max_volume != 0:
 			VolumeControl.instance.volMute()
 		return (True, None)
 	
@@ -343,7 +345,7 @@ class VBMain(Screen):
 				demux = demux if demux > '/' else '0'
 				vbcfg.DEBUG("demux = %s, pmtid = 0x%x, sid = 0x%x" % (demux, pmtid, sid))
 
-				from aitreader import eAITSectionReader
+				from .aitreader import eAITSectionReader
 				reader = eAITSectionReader(demux, pmtid, sid)
 				if reader.doOpen(info, self.aitReader):
 					reader.doParseApplications()

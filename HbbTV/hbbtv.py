@@ -1,12 +1,13 @@
+from __future__ import absolute_import
 from Screens.Screen import Screen
 from Screens.ChannelSelection import ChannelSelection
 from Components.ActionMap import ActionMap
 from enigma import eTimer, eServiceReference
 from boxbranding import getMachineBuild
 
-import os, struct, vbcfg
-
-from vbipc import VBController
+import os, struct
+from . import vbcfg
+from .vbipc import VBController
 
 class HbbTVWindow(Screen):
 	skin = """
