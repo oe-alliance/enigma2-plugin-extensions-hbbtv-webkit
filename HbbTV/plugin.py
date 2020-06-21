@@ -178,7 +178,7 @@ class VBHandler(VBHandlers):
 		if (vbcfg.g_channel_info):
 			try:
 				data = struct.pack('iiiii', int(orgid), vbcfg.g_channel_info[0], vbcfg.g_channel_info[1], vbcfg.g_channel_info[2], len(vbcfg.g_channel_info[3])) + vbcfg.g_channel_info[3]
-			except Exception, err:
+			except Exception as err:
 				vbcfg.ERR(err)
 				return (False, None)
 		else:
@@ -209,7 +209,7 @@ class VBHandler(VBHandlers):
 
 		try:
  			data = struct.pack('i', int(offset))
-		except Exception, err:
+		except Exception as err:
 			vbcfg.ERR(err)
 			return (False, None)
 
@@ -323,7 +323,7 @@ class VBMain(Screen):
 		try:
 			if selected[1] is not None:
 				self._cb_hbbtv_activated(selected[1]["url"], selected[1])
-		except Exception, ErrMsg:
+		except Exception as ErrMsg:
 			vbcfg.ERR(ErrMsg)
 
 	def get_autostart_application(self):

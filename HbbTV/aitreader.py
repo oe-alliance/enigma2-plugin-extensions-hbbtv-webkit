@@ -6,9 +6,9 @@ import vbcfg
 RE_XML_ILLEGAL = u'([\u0000-\u0008\u000b-\u000c\u000e-\u001f\ufffe-\uffff])' + \
 				u'|' + \
 				u'([%s-%s][^%s-%s])|([^%s-%s][%s-%s])|([%s-%s]$)|(^[%s-%s])' % \
-				(unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
-				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff),
-				unichr(0xd800),unichr(0xdbff),unichr(0xdc00),unichr(0xdfff))
+				(unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
+				unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff),
+				unichr(0xd800), unichr(0xdbff), unichr(0xdc00), unichr(0xdfff))
 
 DUMPBIN = vbcfg.PLUGINROOT + "/dumpait"
 class eAITSectionReader:
@@ -74,7 +74,7 @@ class eAITSectionReader:
 
 		document = ""
 		try:	document = os.popen(self.mCommand).read()
-		except Exception, ErrMsg:
+		except Exception as ErrMsg:
 			vbcfg.ERR(ErrMsg)
 			return False
 		if len(document) == 0:
@@ -85,7 +85,7 @@ class eAITSectionReader:
 		document = "<URL>" + document + "</URL>"
 		try:
 			self.mDocument = xml.dom.minidom.parseString(document)
-		except Exception, ErrMsg:
+		except Exception as ErrMsg:
 			vbcfg.ERR("XML parse: %s" % ErrMsg)
 			return False
 		return True

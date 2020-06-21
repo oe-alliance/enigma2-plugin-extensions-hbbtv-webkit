@@ -1,3 +1,4 @@
+from __future__ import print_function
 from time import strftime, localtime
 from Tools.Directories import fileExists
 from enigma import fbClass, eRCInput
@@ -42,7 +43,7 @@ def getPosition():
 			file = open("/proc/stb/fb/dst_height", "r")
 			dst_height = int(file.read().strip(), 16)
 			file.close()
-		except Exception, Err:
+		except Exception as Err:
 			ERR(Err)
 			return None
 	return (dst_left, dst_width, dst_top, dst_height)
@@ -66,7 +67,7 @@ def getvmpegPosition():
 			file = open("/proc/stb/vmpeg/0/dst_height", "r")
 			dst_height = int(file.read().strip(), 16)
 			file.close()
-		except Exception, Err:
+		except Exception as Err:
 			ERR(Err)
 			return None
 	return (dst_left, dst_width, dst_top, dst_height)
@@ -91,7 +92,7 @@ def setPosition(params):
 			file = open("/proc/stb/fb/dst_height", "w")
 			file.write('%X' % params[3])
 			file.close()
-		except Exception, Err:
+		except Exception as Err:
 			ERR(Err)
 			return
 
@@ -118,7 +119,7 @@ def setvmpegPosition(params):
 			file = open("/proc/stb/vmpeg/0/dst_apply", "w")
 			file.write("1")
 			file.close()
-		except Exception, Err:
+		except Exception as Err:
 			ERR(Err)
 			return
 
@@ -152,9 +153,9 @@ g_debug = False
 
 def LogEntry(mode, string):
 	if g_debug:
-		print strftime("%x %X", localtime()), "%5s [%12s]" % (mode, "Plugin"), string
+		print(strftime("%x %X", localtime()), "%5s [%12s]" % (mode, "Plugin"), string)
 	elif mode != "DEBUG":
-		print "[browser]", string
+		print("[browser]", string)
 
 def DEBUG(string):
 	LogEntry("DEBUG", string)
