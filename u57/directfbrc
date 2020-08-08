@@ -1,4 +1,4 @@
-ystem=fbdev
+system=fbdev
 madv-remove
 no-cursor-automation
 smooth-upscale
