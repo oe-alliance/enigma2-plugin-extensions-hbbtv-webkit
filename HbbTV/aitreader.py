@@ -1,7 +1,7 @@
 from __future__ import absolute_import
 import os, xml.dom.minidom, re
 from enigma import iServiceInformation
-from six import unichr
+from six import unichr, PY3
 
 from . import vbcfg
 
@@ -83,7 +83,8 @@ class eAITSectionReader:
 			return False
 		document = re.sub(RE_XML_ILLEGAL, "?", document)
 		document = re.sub("&", "+", document)
-		document = document.decode("cp1252").encode("utf-8")
+		if not PY3:
+			document = document.decode("cp1252").encode("utf-8")
 		document = "<URL>" + document + "</URL>"
 		try:
 			self.mDocument = xml.dom.minidom.parseString(document)
