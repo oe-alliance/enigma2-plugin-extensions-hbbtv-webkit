@@ -11,5 +11,5 @@ no-cursor
 vt
 no-vt-switch
 no-debug
-linux-input-devices=/dev/input/event0
+linux-input-devices=/dev/input/event1
 no-banner
