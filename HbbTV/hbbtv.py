@@ -27,7 +27,11 @@ class HbbTVWindow(Screen):
 			self.height = 1080
 		elif (self.height < 576):
 			self.height = 576
-		
+
+		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h8', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'multibox', 'multiboxse'):
+			self.width=1280
+			self.height=720
+
 		vbcfg.g_vmpegposition = vbcfg.getvmpegPosition()
 		vbcfg.g_position = vbcfg.getPosition()
 		vbcfg.osd_lock()
