@@ -1,0 +1,9 @@
+
+mode "1280x720 20Hz 16bit"
+	# D: 50.000 MHz, H: 23.674 kHz, V: 20.658 Hz
+	geometry 1280 720 1280 720 16
+	timings 20000 64 64 32 32 64 2
+	accel false
+	rgba 5/0,6/5,5/11,0/0
+endmode
+
