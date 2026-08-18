@@ -29,7 +29,7 @@ class HbbTVWindow(Screen):
 		elif (self.height < 576):
 			self.height = 576
 
-		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h8', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'multibox', 'multiboxse'):
+		if getMachineBuild() in ('pulse4k', 'pulse4kmini', 'h9', 'h9combo', 'h9combose', 'h9se', 'h10', 'h11', 'h8', 'h8se', 'hzero', 'i55', 'i55plus', 'i55se', 'hd60', 'hd61', 'hd66', 'multibox', 'multiboxse', 'multiboxpro'):
 			self.width=1280
 			self.height=720
 
