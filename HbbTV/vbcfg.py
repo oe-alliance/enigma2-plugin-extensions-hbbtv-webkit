@@ -158,17 +158,13 @@ def LogEntry(mode, string):
 		print("[browser] %s"% string)
 
 def DEBUG(string):
-	if g_debug:
-		LogEntry("DEBUG", string)
+	LogEntry("DEBUG", string)
 
 def LOG(string):
-	if g_debug:
-		LogEntry("LOG", string)
+	LogEntry("LOG", string)
 
 def WARN(string):
-	if g_debug:
-		LogEntry("WARN", string)
+	LogEntry("WARN", string)
 
 def ERR(string):
-	if g_debug:
-		LogEntry("ERROR",string)
+	LogEntry("ERROR", string)

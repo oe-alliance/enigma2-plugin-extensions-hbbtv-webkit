@@ -23,6 +23,16 @@ from .vbipc import VBController, VBServerThread, VBHandlers
 
 strIsEmpty = lambda x: x is None or len(x) == 0
 
+def _to_text(data):
+	if isinstance(data, bytes):
+		return data.decode("utf-8", errors="replace")
+	return str(data)
+
+def _to_bytes(data):
+	if isinstance(data, bytes):
+		return data
+	return str(data).encode("utf-8")
+
 g_dst_left = 0
 g_dst_width = 720
 g_dst_top = 0
@@ -112,6 +122,7 @@ class VBHandler(VBHandlers):
 		return (True, None)
 
 	def _CB_CONTROL_TITLE(self, result, packet):
+		packet = _to_text(packet)
 		if packet.startswith('file://') or packet.startswith('http://'):
 			return (True, None)
 		for x in self.onSetTitleCB:
@@ -142,7 +153,7 @@ class VBHandler(VBHandlers):
 	def _CB_CONTROL_SET_VOLUME(self, result, packet):
 		if self.max_volume < 0:
 			self.max_volume = VolumeControl.instance.volctrl.getVolume()
-		self.soft_volume = int(packet)
+		self.soft_volume = int(_to_text(packet))
 
 		v = 0
 		if self.soft_volume > 0 and self.max_volume > 0:
@@ -179,7 +190,8 @@ class VBHandler(VBHandlers):
 		orgid = appinfo and appinfo["orgid"]
 		if (vbcfg.g_channel_info):
 			try:
-				data = struct.pack('iiiii', int(orgid), vbcfg.g_channel_info[0], vbcfg.g_channel_info[1], vbcfg.g_channel_info[2], len(vbcfg.g_channel_info[3])) + vbcfg.g_channel_info[3]
+				channel_name = _to_bytes(vbcfg.g_channel_info[3])
+				data = struct.pack('iiiii', int(orgid), vbcfg.g_channel_info[0], vbcfg.g_channel_info[1], vbcfg.g_channel_info[2], len(channel_name)) + channel_name
 			except Exception as err:
 				vbcfg.ERR(err)
 				return (False, None)

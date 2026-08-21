@@ -5,6 +5,17 @@ from . import vbcfg
 _OPCODE  = {}
 _BUFSIZE = 4096
 
+def _to_bytes(data):
+	if data is None:
+		return b""
+	if isinstance(data, bytes):
+		return data
+	if isinstance(data, bytearray):
+		return bytes(data)
+	if isinstance(data, str):
+		return data.encode("utf-8")
+	raise TypeError("IPC payload must be bytes or str, not %s" % type(data).__name__)
+
 def SetHandler(opcode, handler):
 	try:
 		_OPCODE[opcode][1] = handler
@@ -30,10 +41,10 @@ class VBController:
 	def assamble(opcodestr, data):
 		opcode = _OPCODE[opcodestr][0]
 		header = struct.pack('i', opcode)
-		return header + data
+		return header + _to_bytes(data)
 
 	@staticmethod
-	def command(opcodestr, data = ""):
+	def command(opcodestr, data=b""):
 		cmd_fd = None
 		vbcfg.DEBUG("send ipc: [%s]" % opcodestr)
 		try:
@@ -80,7 +91,7 @@ class VBServerThread(threading.Thread):
 
 	def parse(self, data):
 		hlen = struct.calcsize('ibi')
-		packet = ""
+		packet = b""
 		opcode, result, length = struct.unpack('ibi', data[:hlen])
 		vbcfg.DEBUG("%s %s %d" % (opcode, result, length))
 		if length > 0:
@@ -88,8 +99,7 @@ class VBServerThread(threading.Thread):
 		return [opcode, result, packet]
 
 	def assamble(self, opcode, result, packet):
-		if packet is None:
-			packet = ""
+		packet = _to_bytes(packet)
 		header = struct.pack('ibi', opcode, (result and 1 or 0), len(packet))
 		return header + packet
 
